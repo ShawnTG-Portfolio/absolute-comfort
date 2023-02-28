@@ -6,16 +6,82 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* 
+
 header {
   background-color: #0a2647;
-  padding: 1rem;
-} */
+  border-bottom: 0.5px solid #89c4e2;
+}
+
+.nav-link {
+  color: #fff;
+}
+
+.nav-link:hover {
+  color: #89c4e2;
+  font-weight: bold;
+}
+
+.nav-link:focus {
+  color: #fff;
+}
 
 .logo {
   color: #fff;
   font-weight: bold;
   text-decoration: none;
+}
+
+.logo:focus {
+  color: #fff;
+}
+
+.badge {
+  border-radius: 20px;
+}
+
+.cat-button {
+  border: none;
+  margin-right: 10px;
+  font-weight: bold;
+}
+.cat-button:hover {
+  color: #0a2647;
+  background-color: #89c4e2;
+}
+
+.cat-sidebar {
+  border: none;
+  margin-left: 70px;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.cat-sidebar:hover {
+  color: #0a2647;
+  background-color: #89c4e2;
+}
+
+.menu {
+  margin-right: 2px;
+}
+
+.search {
+  border: 0.5px solid #89c4e2;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: center;
+}
+
+.search-hg {
+  border: 1px solid #89c4e2;
+  margin-left: 5px;
+}
+
+.search-hg:hover {
+  color: #0a2647;
+  background-color: #89c4e2;
 }
 
 .site-container {
@@ -39,12 +105,14 @@ main {
 .product-screen-button {
   background-color: #0a2647;
   border: none;
+  font-weight: bold;
 }
 
 .product-screen-button:hover {
   background-color: #89c4e2;
   color: #0a2647;
   border: none;
+  font-weight: bold;
 }
 
 /* .btn-primary {
@@ -53,8 +121,8 @@ main {
 } */
 .btn-primary,
 .btn-outline-primary {
-  background-color: #f0c040;
-  color: #000000;
+  background-color: #0a2647;
+  color: #fff;
 }
 .products {
   display: flex;
@@ -63,7 +131,7 @@ main {
 }
 
 .rating span {
-  color: #ffc000;
+  color: #fac213;
 }
 
 .product {
@@ -88,8 +156,8 @@ main {
 }
 
 .checkout-steps > div {
-  border-bottom: 0.2rem solid #a0a0a0;
-  color: #a0a0a0;
+  border-bottom: 0.2rem solid grey;
+  color: grey;
 }
 .checkout-steps > div.active {
   border-bottom: 0.2rem solid #fac213;
@@ -100,13 +168,26 @@ main {
 .navbar-brand {
   font-weight: bold;
 }
+.navbar-brand:hover {
+  color: #89c4e2;
+}
 .side-navbar {
   width: 240px;
   height: 100%;
   position: absolute;
   left: -300px;
-  background-color: #100901;
+  background-color: #0a2647;
   transition: 0.5s;
+}
+
+.sidebar-navlink {
+  border-bottom: 1px solid #89c4e2;
+}
+
+.sidebar-navlink:hover {
+  color: #0a2647;
+  background-color: #89c4e2;
+  font-weight: bold;
 }
 
 .site-container {
@@ -117,11 +198,12 @@ main {
 }
 .active-nav {
   left: 0;
+  color: #89c4e2;
 }
 
-/* .search-box {
-  width: 500px;
-} */
+.search-box {
+  width: 400px;
+}
 
 .text-bold {
   font-weight: bold;

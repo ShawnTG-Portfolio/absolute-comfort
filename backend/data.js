@@ -49,7 +49,7 @@ const data = {
       name: 'Payne Condenser',
       slug: 'Payne AHE60',
       category: 'AC Units',
-      image: '/images/payne-condenser.png',
+      image: '/images/test3.png',
       price: 1495.0,
       countInStock: 10,
       brand: 'Payne',
