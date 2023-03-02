@@ -26,7 +26,6 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import Button from 'react-bootstrap/Button';
 import { getError } from './utils';
 import axios from 'axios';
 import SearchBox from './components/SearchBox';
@@ -39,6 +38,14 @@ import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
+import Footer from './components/Footer/Footer';
+import AboutScreen from './screens/AboutScreen';
+import ContactScreen from './screens/ContactScreen';
+import RefundPolicyScreen from './screens/RefundPolicyScreen';
+import ShippingPolicyScreen from './screens/ShippingPolicyScreen';
+import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen';
+import RequestService from './screens/RequestService';
+import OurWork from './screens/OurWork';
 
 function App() {
   const { state, dispatch: ctxDispatch } =
@@ -53,7 +60,6 @@ function App() {
     window.location.href = '/signin';
   };
 
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -71,18 +77,34 @@ function App() {
   }, []);
   return (
     <BrowserRouter>
-      <div
-        className={
-          sidebarIsOpen
-            ? 'd-flex flex-column site-container active-cont'
-            : 'd-flex flex-column site-container'
-        }
-      >
+      <div>
         <ToastContainer
           position="bottom-center"
           limit={1}
         />
-        <header className="first-header">
+        <header className="header-top-strip py-3 w-100">
+          <div className="container-xxl">
+            <div className="row">
+              <div className="col-6">
+                <p className="text-black mb-0">
+                  "When your comfort counts..."
+                </p>
+              </div>
+              <div className="col-6">
+                <p className="text-end text-black mb-0">
+                  Need a service call? Contact us @
+                  <a
+                    className="text-white"
+                    href="tel:1-242-602-1029"
+                  >
+                    1-242-602-1029
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </header>
+        <header>
           <Navbar expand="lg">
             <Container>
               <LinkContainer to="/">
@@ -96,10 +118,16 @@ function App() {
                   <Link to="/" className="nav-link">
                     Home
                   </Link>
-                  <Link to="/" className="nav-link">
+                  <Link to="/about" className="nav-link">
                     About
                   </Link>
-                  <Link to="/" className="nav-link">
+                  <Link to="/our-work" className="nav-link">
+                    Our Work
+                  </Link>
+                  <Link
+                    to="/request-service"
+                    className="nav-link"
+                  >
                     Request Service
                   </Link>
                   {userInfo ? (
@@ -179,136 +207,47 @@ function App() {
           </Navbar>
         </header>
         <header className="bottom-nav">
+          <div class="dropdown-center">
+            <button
+              class="cat-button dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                className="menu"
+                src="images/menu.svg"
+                alt="cats"
+              />
+              SHOP{' '}
+            </button>
+            <ul class="dropdown-menu dropdown-ul">
+              {categories.map((category) => (
+                <Nav.Item key={category}>
+                  <LinkContainer
+                    // to={`/search/category=${category}`}
+                    to={{
+                      pathname: '/search',
+                      search: `category=${category}`,
+                    }}
+                  >
+                    <Nav.Link className="dropdown-cats">
+                      {category}
+                    </Nav.Link>
+                  </LinkContainer>
+                </Nav.Item>
+              ))}
+            </ul>
+          </div>
           <Navbar expand="lg">
             <Container>
-              <Button
-                className="cat-button"
-                onClick={() =>
-                  setSidebarIsOpen(!sidebarIsOpen)
-                }
-              >
-                <img
-                  className="menu"
-                  src="images/menu.svg"
-                  alt="cats"
-                />
-                CATEGORIES{' '}
-              </Button>
               <SearchBox />
-              {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto  w-100  justify-content-end"> */}
-              {/* <Link to="/cart" className="nav-link">
-                    Cart
-                    {cart.cartItems.length > 0 && (
-                      <Badge pill bg="danger">
-                        {cart.cartItems.reduce(
-                          (a, c) => a + c.quantity,
-                          0
-                        )}
-                      </Badge>
-                    )}
-                  </Link> */}
-
-              {/* {userInfo ? (
-                    <NavDropdown
-                      title={userInfo.name}
-                      id="basic-nav-dropdown"
-                    >
-                      <LinkContainer to="/profile">
-                        <NavDropdown.Item>
-                          User Profile
-                        </NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/orderhistory">
-                        <NavDropdown.Item>
-                          Order History
-                        </NavDropdown.Item>
-                      </LinkContainer>
-                      <NavDropdown.Divider />
-                      <Link
-                        className="dropdown-item"
-                        to="#signout"
-                        onClick={signoutHandler}
-                      >
-                        Sign Out
-                      </Link>
-                    </NavDropdown>
-                  ) : (
-                    <Link className="nav-link" to="/signin">
-                      Sign In
-                    </Link>
-                  )} */}
-              {/* {userInfo && userInfo.isAdmin && (
-                    <NavDropdown
-                      title="Admin"
-                      id="admin-nav-dropdown"
-                    >
-                      <LinkContainer to="/admin/dashboard">
-                        <NavDropdown.Item>
-                          Dashboard
-                        </NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/products">
-                        <NavDropdown.Item>
-                          Products
-                        </NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/orders">
-                        <NavDropdown.Item>
-                          Orders
-                        </NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/users">
-                        <NavDropdown.Item>
-                          Users
-                        </NavDropdown.Item>
-                      </LinkContainer>
-                    </NavDropdown>
-                  )} */}
-              {/* </Nav>
-              </Navbar.Collapse> */}
             </Container>
           </Navbar>
         </header>
 
-        <div
-          className={
-            sidebarIsOpen
-              ? 'active-nav side-navbar d-flex justify-content-between flex-wrap flex-column'
-              : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
-          }
-        >
-          <Nav className="flex-column text-white w-100 p-2">
-            <Nav.Item>
-              <strong>CATEGORIES</strong>
-              <Button
-                onClick={() => setSidebarIsOpen(false)}
-                className="cat-sidebar"
-              >
-                X
-              </Button>
-            </Nav.Item>
-            {categories.map((category) => (
-              <Nav.Item key={category}>
-                <LinkContainer
-                  // to={`/search/category=${category}`}
-                  to={{
-                    pathname: '/search',
-                    search: `category=${category}`,
-                  }}
-                  onClick={() => setSidebarIsOpen(false)}
-                >
-                  <Nav.Link className="sidebar-navlink">
-                    {category}
-                  </Nav.Link>
-                </LinkContainer>
-              </Nav.Item>
-            ))}
-          </Nav>
-        </div>
         <main>
-          <Container className="mt-3">
+          <div>
             <Routes>
               <Route
                 path="/product/:slug"
@@ -367,6 +306,34 @@ function App() {
                 path="/payment"
                 element={<PaymentMethodScreen />}
               ></Route>
+              <Route
+                path="/about"
+                element={<AboutScreen />}
+              ></Route>
+              <Route
+                path="/our-work"
+                element={<OurWork />}
+              ></Route>
+              <Route
+                path="/contact"
+                element={<ContactScreen />}
+              ></Route>
+              <Route
+                path="/refund-policy"
+                element={<RefundPolicyScreen />}
+              ></Route>
+              <Route
+                path="/shipping-policy"
+                element={<ShippingPolicyScreen />}
+              ></Route>
+              <Route
+                path="/terms-and-conditions"
+                element={<TermsAndConditionsScreen />}
+              ></Route>
+              <Route
+                path="/request-service"
+                element={<RequestService />}
+              ></Route>
               {/* Admin Routes */}
               <Route
                 path="/admin/dashboard"
@@ -416,13 +383,15 @@ function App() {
                   </AdminRoute>
                 }
               ></Route>
+
               <Route path="/" element={<HomeScreen />} />
             </Routes>
-          </Container>
+          </div>
         </main>
+
         <footer>
           <div className="text-center">
-            All rights reserved
+            <Footer />
           </div>
         </footer>
       </div>

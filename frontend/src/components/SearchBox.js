@@ -33,7 +33,7 @@ export default function SearchBox() {
           type="submit"
           id="button-search"
         >
-          <i className="fas fa-search"></i>
+          <i className="fas fa-search "></i>
         </Button>
       </InputGroup>
     </Form>

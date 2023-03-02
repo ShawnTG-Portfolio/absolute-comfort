@@ -17,6 +17,7 @@ import { Store } from '../Store';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { getError } from '../utils';
+import Container from 'react-bootstrap/esm/Container';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -170,89 +171,93 @@ export default function ProductListScreen() {
   };
 
   return (
-    <div>
-      <Row>
-        <Col>
-          <h1>Products</h1>
-        </Col>
-        <Col className="col text-end">
-          <div>
-            <Button type="button" onClick={createHandler}>
-              Create Product
-            </Button>
-          </div>
-        </Col>
-      </Row>
+    <Container className="mt-3">
+      <div>
+        <Row>
+          <Col>
+            <h1>Products</h1>
+          </Col>
+          <Col className="col text-end">
+            <div>
+              <Button type="button" onClick={createHandler}>
+                Create Product
+              </Button>
+            </div>
+          </Col>
+        </Row>
 
-      {loadingCreate && <LoadingBox></LoadingBox>}
-      {loadingDelete && <LoadingBox></LoadingBox>}
-      {loading ? (
-        <LoadingBox></LoadingBox>
-      ) : error ? (
-        <MessageBox variant="danger">{error}</MessageBox>
-      ) : (
-        <>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>IN STOCK</th>
-                <th>CATEGORY</th>
-                <th>ACTION</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((product) => (
-                <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>{product.price}</td>
-                  <td>{product.countInStock}</td>
-                  <td>{product.category}</td>
-                  <td>
-                    <Button
-                      type="button"
-                      variant="light"
-                      onClick={() =>
-                        navigate(
-                          `/admin/product/${product._id}`
-                        )
-                      }
-                    >
-                      Edit
-                    </Button>
-                    &nbsp;
-                    <Button
-                      type="button"
-                      variant="light"
-                      onClick={() => deleteHandler(product)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
+        {loadingCreate && <LoadingBox></LoadingBox>}
+        {loadingDelete && <LoadingBox></LoadingBox>}
+        {loading ? (
+          <LoadingBox></LoadingBox>
+        ) : error ? (
+          <MessageBox variant="danger">{error}</MessageBox>
+        ) : (
+          <>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>NAME</th>
+                  <th>PRICE</th>
+                  <th>IN STOCK</th>
+                  <th>CATEGORY</th>
+                  <th>ACTION</th>
                 </tr>
+              </thead>
+              <tbody>
+                {products.map((product) => (
+                  <tr key={product._id}>
+                    <td>{product._id}</td>
+                    <td>{product.name}</td>
+                    <td>{product.price}</td>
+                    <td>{product.countInStock}</td>
+                    <td>{product.category}</td>
+                    <td>
+                      <Button
+                        type="button"
+                        variant="light"
+                        onClick={() =>
+                          navigate(
+                            `/admin/product/${product._id}`
+                          )
+                        }
+                      >
+                        Edit
+                      </Button>
+                      &nbsp;
+                      <Button
+                        type="button"
+                        variant="light"
+                        onClick={() =>
+                          deleteHandler(product)
+                        }
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div>
+              {[...Array(pages).keys()].map((x) => (
+                <Link
+                  className={
+                    x + 1 === Number(page)
+                      ? 'btn text-bold'
+                      : 'btn'
+                  }
+                  key={x + 1}
+                  to={`/admin/products?page=${x + 1}`}
+                >
+                  {x + 1}
+                </Link>
               ))}
-            </tbody>
-          </table>
-          <div>
-            {[...Array(pages).keys()].map((x) => (
-              <Link
-                className={
-                  x + 1 === Number(page)
-                    ? 'btn text-bold'
-                    : 'btn'
-                }
-                key={x + 1}
-                to={`/admin/products?page=${x + 1}`}
-              >
-                {x + 1}
-              </Link>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
+            </div>
+          </>
+        )}
+      </div>
+    </Container>
   );
 }
