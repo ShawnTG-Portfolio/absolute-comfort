@@ -52,7 +52,7 @@ export default function PlaceOrderScreen() {
   );
   cart.shippingPrice =
     cart.itemsPrice > 500 ? round2(0) : round2(65);
-  cart.vatPrice = round2(0.1 * cart.itemsPrice);
+  cart.vatPrice = round2(0.1 * cart.itemsPrice + 6.5);
   cart.totalPrice =
     cart.itemsPrice + cart.shippingPrice + cart.vatPrice;
 
