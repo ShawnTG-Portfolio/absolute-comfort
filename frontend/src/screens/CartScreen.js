@@ -72,7 +72,7 @@ export default function CartScreen() {
                           {item.name}
                         </Link>
                       </Col>
-                      <Col md={3}>
+                      <Col md={2}>
                         <Button
                           variant="light"
                           onClick={() =>
@@ -102,8 +102,11 @@ export default function CartScreen() {
                           <i className="fas fa-plus-circle"></i>
                         </Button>
                       </Col>
-                      <Col md={3}>
-                        ${item.price.toFixed(2)}
+                      <Col md={2}>
+                        BD: ${item.bondedPrice.toFixed(2)}
+                      </Col>
+                      <Col md={2}>
+                        DP: ${item.price.toFixed(2)}
                       </Col>
                       <Col md={2}>
                         <Button
@@ -127,7 +130,7 @@ export default function CartScreen() {
                 <ListGroup variant="flush">
                   <ListGroup.Item>
                     <h4>
-                      Subtotal (
+                      Subtotal DP (
                       {cartItems.reduce(
                         (a, c) => a + c.quantity,
                         0

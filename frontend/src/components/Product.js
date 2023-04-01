@@ -49,7 +49,12 @@ function Product(props) {
           rating={product.rating}
           numReviews={product.numReviews}
         />
-        <Card.Text>${product.price.toFixed(2)}</Card.Text>
+        <Card.Text>
+          Duty Paid: ${product.price.toFixed(2)}
+        </Card.Text>
+        <Card.Text>
+          Bonded: ${product.bondedPrice.toFixed(2)}
+        </Card.Text>
         {product.countInStock === 0 ? (
           <Button variant="light" disabled>
             Out of Stock

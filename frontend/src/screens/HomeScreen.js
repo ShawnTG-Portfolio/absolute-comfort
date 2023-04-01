@@ -62,8 +62,8 @@ function HomeScreen() {
     fetchData();
   }, []);
 
-  const splitUnits = products.filter((product) => {
-    return product.category === 'Split Units';
+  const featuredProduct = products.filter((product) => {
+    return product.categoryTwo === 'Featured Product';
   });
 
   return (
@@ -192,7 +192,7 @@ function HomeScreen() {
               </MessageBox>
             ) : (
               <Row>
-                {splitUnits.map((product) => (
+                {featuredProduct.map((product) => (
                   <Col
                     key={product.slug}
                     sm={6}

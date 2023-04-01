@@ -22,7 +22,7 @@ export default function RefundPolicyScreen() {
             for an "in store" credit to be use for a future
             purchase. We do not offer cash refunds as an
             option. If purchasing via bonded pricing, which
-            requires instore verification, note if unbale to
+            requires instore verification, note if unable to
             verify, you will require to pay the balance
             after duty paid prices have been calculated and
             added to paid amount, should you reques a refund

@@ -74,8 +74,10 @@ export default function ProductEditScreen() {
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
   const [price, setPrice] = useState('');
+  const [bondedPrice, setBondedPrice] = useState('');
   const [image, setImage] = useState('');
   const [category, setCategory] = useState('');
+  const [categoryTwo, setCategoryTwo] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
@@ -90,8 +92,10 @@ export default function ProductEditScreen() {
         setName(data.name);
         setSlug(data.slug);
         setPrice(data.price);
+        setBondedPrice(data.bondedprice);
         setImage(data.image);
         setCategory(data.category);
+        setCategoryTwo(data.categoryTwo);
         setCountInStock(data.countInStock);
         setBrand(data.brand);
         setDescription(data.description);
@@ -117,8 +121,10 @@ export default function ProductEditScreen() {
           name,
           slug,
           price,
+          bondedPrice,
           image,
           category,
+          categoryTwo,
           brand,
           countInStock,
           description,
@@ -206,6 +212,16 @@ export default function ProductEditScreen() {
               required
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="name">
+            <Form.Label>Bonded Price</Form.Label>
+            <Form.Control
+              value={bondedPrice}
+              onChange={(e) =>
+                setBondedPrice(e.target.value)
+              }
+              required
+            />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="image">
             <Form.Label>Image File</Form.Label>
             <Form.Control
@@ -230,6 +246,19 @@ export default function ProductEditScreen() {
             <Form.Control
               value={category}
               onChange={(e) => setCategory(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="categoryTwo"
+          >
+            <Form.Label>CategoryTwo</Form.Label>
+            <Form.Control
+              value={categoryTwo}
+              onChange={(e) =>
+                setCategoryTwo(e.target.value)
+              }
               required
             />
           </Form.Group>

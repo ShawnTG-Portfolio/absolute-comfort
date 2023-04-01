@@ -19,7 +19,9 @@ productRouter.post(
       slug: 'sample-name-' + Date.now(),
       image: '/images/p1.jpg',
       price: 0,
+      bondedPrice: 0,
       category: 'sample category',
+      categoryTwo: 'sample categoryTwo',
       brand: 'sample brand',
       countInStock: 0,
       rating: 0,
@@ -42,8 +44,10 @@ productRouter.put(
       product.name = req.body.name;
       product.slug = req.body.slug;
       product.price = req.body.price;
+      product.bondedPrice = req.body.bondedPrice;
       product.image = req.body.image;
       product.category = req.body.category;
+      product.categoryTwo = req.body.categoryTwo;
       product.brand = req.body.brand;
       product.countInStock = req.body.countInStock;
       product.description = req.body.description;
@@ -86,11 +90,9 @@ productRouter.post(
           (x) => x.name === req.user.name
         )
       ) {
-        return res
-          .status(400)
-          .send({
-            message: 'You already submitted a review',
-          });
+        return res.status(400).send({
+          message: 'You already submitted a review',
+        });
       }
 
       const review = {

@@ -186,7 +186,12 @@ function ProductScreen() {
                 ></Rating>
               </ListGroup.Item>
               <ListGroup.Item>
-                Pirce : ${product.price.toFixed(2)}
+                Duty Paid Price : $
+                {product.price.toFixed(2)}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Bonded Price : $
+                {product.bondedPrice.toFixed(2)}
               </ListGroup.Item>
               <ListGroup.Item>
                 Description:
@@ -200,8 +205,16 @@ function ProductScreen() {
                 <ListGroup variant="flush">
                   <ListGroup.Item>
                     <Row>
-                      <Col>Price:</Col>
+                      <Col>Duty Paid Price:</Col>
                       <Col>${product.price.toFixed(2)}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Bonded Price:</Col>
+                      <Col>
+                        ${product.bondedPrice.toFixed(2)}
+                      </Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>

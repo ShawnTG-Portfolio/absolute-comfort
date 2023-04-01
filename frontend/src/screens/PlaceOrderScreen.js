@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import React, {
+  useState,
   useContext,
   useEffect,
   useReducer,
@@ -33,7 +34,10 @@ const reducer = (state, action) => {
 
 export default function PlaceOrderScreen() {
   const navigate = useNavigate();
-
+  const [isBonded, setIsBonded] = useState(false);
+  const [inStorePickUp, setInStorePickUp] = useState(false);
+  const [bondedPrice, setBondedPrice] = useState(0);
+  const [bondedNote, setBondedNote] = useState('');
   const [{ loading }, dispatch] = useReducer(reducer, {
     loading: false,
   });
@@ -44,17 +48,63 @@ export default function PlaceOrderScreen() {
 
   const round2 = (num) =>
     Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
-  cart.itemsPrice = round2(
-    cart.cartItems.reduce(
-      (a, c) => a + c.quantity * c.price,
-      0
-    )
-  );
-  cart.shippingPrice =
-    cart.itemsPrice > 500 ? round2(0) : round2(65);
-  cart.vatPrice = round2(0.1 * cart.itemsPrice + 6.5);
-  cart.totalPrice =
-    cart.itemsPrice + cart.shippingPrice + cart.vatPrice;
+
+  // cart.itemsPrice = round2(
+  //   cart.cartItems.reduce(
+  //     (a, c) => a + c.quantity * c.price,
+  //     0
+  //   )
+  // );
+
+  const handleInStorePickUp = () => {
+    setInStorePickUp(true);
+    round2((cart.shippingPrice = 0));
+  };
+
+  const handleIsBonded = () => {
+    setIsBonded(true);
+    setBondedNote(
+      <p>
+        Note: Bonded pricing will require in house
+        verification before processing.
+      </p>
+    );
+    setBondedPrice(round2(cart.itemsPrice * 0.10717));
+  };
+
+  if (inStorePickUp) {
+    cart.shipping = 0;
+  }
+
+  if (!isBonded) {
+    cart.itemsPrice = round2(
+      cart.cartItems.reduce(
+        (a, c) => a + c.quantity * c.price,
+        0
+      )
+    );
+
+    cart.shippingPrice =
+      cart.itemsPrice > 500 ? round2(0) : round2(65);
+
+    cart.pendingPrice =
+      cart.itemsPrice + cart.shippingPrice;
+    cart.vatPrice = round2(0.1 * cart.pendingPrice);
+    cart.totalPrice = cart.pendingPrice + cart.vatPrice;
+  } else {
+    cart.itemsPrice = round2(
+      cart.cartItems.reduce(
+        (a, c) => a + c.quantity * c.price,
+        0
+      ) - bondedPrice
+    );
+    cart.shippingPrice =
+      cart.itemsPrice > 500 ? round2(0) : round2(65);
+    cart.pendingPrice =
+      cart.itemsPrice + cart.shippingPrice;
+    cart.vatPrice = 0;
+    cart.totalPrice = cart.pendingPrice + cart.vatPrice;
+  }
 
   const placeOrderHandler = async () => {
     try {
@@ -68,6 +118,7 @@ export default function PlaceOrderScreen() {
           paymentMethod: cart.paymentMethod,
           itemsPrice: cart.itemsPrice,
           shippingPrice: cart.shippingPrice,
+          pendingPrice: cart.pendingPrice,
           vatPrice: cart.vatPrice,
           totalPrice: cart.totalPrice,
         },
@@ -165,10 +216,12 @@ export default function PlaceOrderScreen() {
             </Card.Body>
           </Card>
         </Col>
+
         <Col md={4}>
           <Card>
             <Card.Body>
               <Card.Title>Order Summary</Card.Title>
+
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <Row>
@@ -181,6 +234,21 @@ export default function PlaceOrderScreen() {
                     <Col>Shipping</Col>
                     <Col>
                       ${cart.shippingPrice.toFixed(2)}
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <div className="d-grid">
+                    <Button onClick={handleInStorePickUp}>
+                      In Store Pickup
+                    </Button>
+                  </div>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Total Less Vat</Col>
+                    <Col>
+                      ${cart.pendingPrice.toFixed(2)}
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -204,6 +272,13 @@ export default function PlaceOrderScreen() {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <div className="d-grid">
+                    <Button onClick={handleIsBonded}>
+                      Bonded Pricing
+                    </Button>
+                  </div>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <div className="d-grid">
                     <Button
                       type="button"
                       onClick={placeOrderHandler}
@@ -214,6 +289,10 @@ export default function PlaceOrderScreen() {
                     </Button>
                   </div>
                   {loading && <LoadingBox></LoadingBox>}
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <div className="d-grid">{bondedNote}</div>
                 </ListGroup.Item>
               </ListGroup>
             </Card.Body>
